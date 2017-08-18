@@ -1,0 +1,7 @@
+deploy.txt
+
+IPv4 Public IP
+52.14.221.92
+
+Private IPs
+172.31.35.57

@@ -1,0 +1,34 @@
+<h2>Welcome, <%= @user.first_name.titleize %></h2>
+<!-- Current User Home Page -->
+
+<!-- Add A New Secret -->
+<p>Add New Idea:</p>
+	<form action="/ideas/new" method="post">
+
+		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+		<textarea type='text' name="idea[content]" placeholder="Post something witty here..."></textarea>
+
+		<input type="submit" name="submit" value="Idea!">
+
+	</form>
+
+
+	<% @ideas.each do |idea| %>
+	<hr>
+	<p><a href="/users/<%= idea.user.id %>/info"><%= idea.user.first_name %></a> says: "<%= idea.content %>" 
+
+		<% unless idea.liked_by.include?(current_user)%>
+			<p><a href="/likes/<%= idea.id %>" data-method="post">((Like))</a></p>
+
+		<% else %>
+			<p><a href="/likes/<%= idea.id %>" data-method="delete">((unlike))</a></p>
+		<% end %>
+		<p><a href="/ideas/<%= idea.id %>"><%= idea.likes.count %> people</a> like this. </p>
+
+
+		<% if idea.user_id == current_user.id %>
+		<a href="/ideas/<%= idea.id %>" data-method="delete"> *Delete*</a>
+		<% end %>
+	
+<% end %>
